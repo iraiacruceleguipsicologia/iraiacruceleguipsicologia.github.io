@@ -442,7 +442,7 @@
     <p>La primera sesión es una toma de contacto sin compromiso. Cuéntame qué te trae y vemos juntos cómo puedo ayudarte.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:2.5rem;text-align:left;">
     <div>
-      <p style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-light);margin-bottom:1rem;">📅 Disponibilidad</p>
+      <p style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-light);margin-bottom:.5rem;">📅 Disponibilidad <span style="text-transform:none;font-size:.78rem;opacity:.7;">(opcional)</span></p><p style="font-size:.78rem;color:var(--text-light);margin-bottom:.8rem;font-style:italic;">Puedes reservar fecha aquí o simplemente enviar tu consulta y me pongo en contacto contigo.</p>
       <div style="border-radius:1.2rem;overflow:hidden;background:rgba(255,255,255,.05);">
         <iframe src="https://calendar.google.com/calendar/embed?src=TU_CALENDARIO_ID%40gmail.com&ctz=Europe%2FMadrid&mode=WEEK&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&bgcolor=%232e2416&color=%237a9e7e" 
           style="border:none;width:100%;height:420px;border-radius:1.2rem;" 
@@ -466,8 +466,8 @@
       </div>
     </div>
     <div>
-      <p style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-light);margin-bottom:1rem;">✉️ Solicita tu cita</p>
-    <form action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST" id="cita-form">
+      <p style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-light);margin-bottom:1rem;">✉️ Escríbeme</p>
+    <form action="https://formspree.io/f/TU_ID_FORMSPREE" novalidate method="POST" id="cita-form">
     <input type="hidden" name="_subject" value="Nueva solicitud de cita — Iraia Crucelegui" />
     <input type="hidden" name="_next" value="#reservar" />
     <div class="form-grid">
@@ -491,28 +491,38 @@
         </select>
       </div>
       <div class="form-field full">
-        <label>Área de consulta</label>
+        <label>¿Qué necesitas?</label>
+        <select name="tipo">
+          <option value="informacion">💬 Solo quiero información</option>
+          <option value="cita_presencial">📍 Reservar cita presencial</option>
+          <option value="cita_online">💻 Reservar cita online</option>
+          <option value="dudas">❓ Tengo dudas, no sé por dónde empezar</option>
+        </select>
+      </div>
+      <div class="form-field full" id="area-field">
+        <label>Área de consulta <span style="opacity:.6;font-size:.75em;">(opcional)</span></label>
         <select name="area">
+          <option value="">— Seleccionar —</option>
           <option>Terapia individual (adultos)</option>
-          <option>Terapia de pareja</option>
-          <option>Psicología infantil / adolescente</option>
-          <option>Orientación familiar</option>
-          <option>Otro / No sé todavía</option>
+          <option>Mindfulness y estrés</option>
+          <option>Psicología online</option>
+          <option>No lo sé todavía</option>
         </select>
       </div>
       <div class="form-field full">
         <label>¿Quieres contarme algo más? (opcional)</label>
-        <textarea name="mensaje" placeholder="Cuéntame brevemente qué te gustaría trabajar..."></textarea>
+        <textarea name="mensaje" placeholder="Cuéntame brevemente qué te trae o qué quieres saber... (opcional)"></textarea>
       </div>
     </div><!-- end form-grid -->
-    <button class="btn-form" type="submit">Solicitar cita</button>
+    <button class="btn-form" type="submit">Enviar mensaje</button>
     <p class="form-nota">🔒 Tus datos son confidenciales y se tratan conforme al RGPD.</p>
+    <p style="font-size:.72rem;color:#c9a98a;margin-top:.5rem;text-align:center;">⚙️ Para activar el envío de emails, configura tu ID de Formspree en el código.</p>
     </form>
     </div><!-- end form col -->
     </div><!-- end two-col grid -->
     <div id="form-success" style="display:none;text-align:center;padding:2rem;color:var(--sage-light);">
-      <p style="font-size:1.3rem;">✅ ¡Solicitud enviada!</p>
-      <p>En breve me pondré en contacto contigo para confirmar la cita.</p>
+      <p style="font-size:1.3rem;">✅ ¡Mensaje enviado!</p>
+      <p>En breve me pondré en contacto contigo. ¡Gracias por escribirme!</p>
     </div>
   </div>
 </section>
@@ -588,6 +598,17 @@
 </footer>
 
 <script>
+  // Show/hide area field based on tipo
+  const tipoSelect = document.querySelector('select[name="tipo"]');
+  const areaField = document.getElementById('area-field');
+  if (tipoSelect && areaField) {
+    tipoSelect.addEventListener('change', function() {
+      areaField.style.display = this.value === 'informacion' ? 'none' : 'flex';
+    });
+    // Hide by default if "informacion" selected
+    if (tipoSelect.value === 'informacion') areaField.style.display = 'none';
+  }
+
   // Form AJAX submission
   const form = document.getElementById('cita-form');
   if (form) {

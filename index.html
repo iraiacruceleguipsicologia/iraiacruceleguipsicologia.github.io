@@ -487,7 +487,7 @@
         <label>Correo electrónico</label>
         <input type="email" name="email" placeholder="correo@ejemplo.com" required />
       </div>
-      <div class="form-field">
+      <div class="form-field" id="modalidad-field">
         <label>Modalidad</label>
         <select name="modalidad">
           <option>Presencial</option>
@@ -496,11 +496,11 @@
       </div>
       <div class="form-field full">
         <label>¿Qué necesitas?</label>
-        <select name="tipo">
+        <select name="tipo" id="tipo-select">
           <option value="informacion">💬 Solo quiero información</option>
+          <option value="dudas">❓ Tengo dudas, no sé por dónde empezar</option>
           <option value="cita_presencial">📍 Reservar cita presencial</option>
           <option value="cita_online">💻 Reservar cita online</option>
-          <option value="dudas">❓ Tengo dudas, no sé por dónde empezar</option>
         </select>
       </div>
       <div class="form-field full" id="area-field">
@@ -624,14 +624,22 @@
       });
     }
 
-    // Show/hide area field based on tipo
-    const tipoSelect = document.querySelector('select[name="tipo"]');
+    // Show/hide area + modalidad fields based on tipo
+    const tipoSelect = document.getElementById('tipo-select');
     const areaField = document.getElementById('area-field');
-    if (tipoSelect && areaField) {
-      tipoSelect.addEventListener('change', function() {
-        areaField.style.display = this.value === 'informacion' ? 'none' : 'flex';
-      });
-      if (tipoSelect.value === 'informacion') areaField.style.display = 'none';
+    const modalidadField = document.getElementById('modalidad-field');
+
+    function updateFormFields() {
+      if (!tipoSelect) return;
+      const val = tipoSelect.value;
+      const sinCompromiso = val === 'informacion' || val === 'dudas';
+      if (areaField) areaField.style.display = sinCompromiso ? 'none' : 'flex';
+      if (modalidadField) modalidadField.style.display = sinCompromiso ? 'none' : 'flex';
+    }
+
+    if (tipoSelect) {
+      tipoSelect.addEventListener('change', updateFormFields);
+      updateFormFields(); // run on load
     }
 
     // Form AJAX submission

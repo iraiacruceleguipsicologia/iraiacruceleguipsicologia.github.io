@@ -313,6 +313,10 @@
     footer a { color: var(--sage-light); text-decoration: none; }
 
     /* ───────── ANIMATIONS ───────── */
+    @keyframes popupIn {
+      from { opacity: 0; transform: scale(.85) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -467,7 +471,7 @@
     </div>
     <div>
       <p style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-light);margin-bottom:1rem;">✉️ Escríbeme</p>
-    <form action="https://formspree.io/xaqzqlaa" novalidate method="POST" id="cita-form">
+    <form action="https://formspree.io/f/xaqzqlaa" novalidate method="POST" id="cita-form">
     <input type="hidden" name="_subject" value="Nueva solicitud de cita — Iraia Crucelegui" />
     <input type="hidden" name="_next" value="#reservar" />
     <div class="form-grid">
@@ -624,8 +628,11 @@
           headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          form.style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
+          const overlay = document.getElementById('popup-overlay');
+          overlay.style.display = 'flex';
+          form.reset();
+          btn.textContent = 'Enviar mensaje';
+          btn.disabled = false;
         } else {
           btn.textContent = 'Error, inténtalo de nuevo';
           btn.disabled = false;
@@ -636,6 +643,15 @@
       }
     });
   }
+
+  // Popup
+  function closePopup() {
+    document.getElementById('popup-overlay').style.display = 'none';
+  }
+  // Close popup clicking outside
+  document.getElementById('popup-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closePopup();
+  });
 
   // Nav scroll effect
   const nav = document.getElementById('main-nav');
@@ -654,5 +670,65 @@
   }, { threshold: 0.12 });
   reveals.forEach(el => io.observe(el));
 </script>
+
+<!-- POPUP ÉXITO -->
+<div id="popup-overlay" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(61,46,35,.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div id="popup-card" style="
+    background: #f7f3ee;
+    border-radius: 1.5rem;
+    max-width: 420px;
+    width: 90%;
+    padding: 3rem 2.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(61,46,35,.2);
+    animation: popupIn .4s cubic-bezier(.34,1.56,.64,1) both;
+    border: 1px solid rgba(122,158,126,.2);
+  ">
+    <!-- Hoja decorativa esquina inferior derecha -->
+    <svg style="position:absolute;bottom:1rem;right:1rem;opacity:.25;width:60px;" viewBox="0 0 80 80" fill="none" stroke="#7a9e7e" stroke-width="1.2">
+      <path d="M20 70 C20 70, 20 30, 50 15"/>
+      <path d="M50 15 C50 15, 65 35, 45 55"/>
+      <path d="M50 15 C50 15, 30 20, 20 45"/>
+      <path d="M35 30 C35 30, 55 25, 60 40"/>
+    </svg>
+    <!-- Hoja decorativa esquina superior izquierda -->
+    <svg style="position:absolute;top:1rem;left:1rem;opacity:.25;width:50px;transform:rotate(180deg);" viewBox="0 0 80 80" fill="none" stroke="#7a9e7e" stroke-width="1.2">
+      <path d="M20 70 C20 70, 20 30, 50 15"/>
+      <path d="M50 15 C50 15, 65 35, 45 55"/>
+      <path d="M50 15 C50 15, 30 20, 20 45"/>
+    </svg>
+    <!-- Botón cerrar -->
+    <button onclick="closePopup()" style="
+      position:absolute;top:1rem;right:1rem;
+      background:none;border:none;cursor:pointer;
+      color:#9e8876;font-size:1.2rem;line-height:1;
+      width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+      border-radius:50%;transition:background .2s;
+    " onmouseover="this.style.background='rgba(122,158,126,.15)'" onmouseout="this.style.background='none'">✕</button>
+    <!-- Logo -->
+    <div style="margin-bottom:1.5rem;">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="27" stroke="#7a9e7e" stroke-width="1.2"/>
+        <circle cx="28" cy="28" r="27" stroke="#7a9e7e" stroke-width="1.2" stroke-dasharray="4 3" opacity=".3"/>
+      </svg>
+      <div style="margin-top:.3rem;font-size:1.4rem;">✅</div>
+    </div>
+    <!-- Marco tipo carta -->
+    <div style="border:1px solid rgba(122,158,126,.3);border-radius:1rem;padding:1.8rem 1.5rem;margin-bottom:1.8rem;background:rgba(255,255,255,.6);">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:#3d2e23;margin-bottom:.6rem;">¡Mensaje enviado!</p>
+      <div style="width:40px;height:1px;background:#7a9e7e;margin:.6rem auto 1rem;"></div>
+      <p style="font-size:.95rem;color:#6b5744;line-height:1.7;">En breve me pondré en contacto contigo.<br>¡Gracias por escribirme! 🌿</p>
+    </div>
+    <button onclick="closePopup()" style="
+      background:#7a9e7e;color:#fff;
+      border:none;border-radius:2rem;
+      padding:.85rem 2.5rem;
+      font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
+      cursor:pointer;transition:background .2s,transform .2s;
+      width:100%;
+    " onmouseover="this.style.background='#3d2e23'" onmouseout="this.style.background='#7a9e7e'">Aceptar</button>
+  </div>
+</div>
 </body>
 </html>

@@ -3,7 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iraia Crucelegui · Psicóloga en Mungia</title>
+  <title>Iraia Crucelegui · Atlas Psicología · Mungia</title>
+  <!-- SEO -->
+  <meta name="description" content="Iraia Crucelegui, Psicóloga General Sanitaria en Mungia, Bizkaia. Terapia individual, mindfulness y consulta online. Reserva tu cita en el Centro de Fisioterapia Atlas." />
+  <meta name="keywords" content="psicóloga Mungia, psicóloga Bizkaia, terapia individual, psicología online, Iraia Crucelegui, salud mental Bizkaia, psicóloga Mungia Bizkaia" />
+  <meta name="author" content="Iraia Crucelegui" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://iraiacruceleguipsicologia.github.io" />
+
+  <!-- Open Graph (para compartir en redes sociales) -->
+  <meta property="og:title" content="Iraia Crucelegui · Atlas Psicología · Mungia, Bizkaia" />
+  <meta property="og:description" content="Terapia individual, mindfulness y consulta online en Mungia, Bizkaia. Reserva tu primera cita." />
+  <meta property="og:url" content="https://iraiacruceleguipsicologia.github.io" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+
+  <!-- Schema.org (datos estructurados para Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "Atlas Psicología · Iraia Crucelegui",
+    "description": "Psicóloga General Sanitaria en Mungia, Bizkaia. Terapia individual, mindfulness y consulta online.",
+    "alternateName": "Atlas Psicología",
+    "url": "https://iraiacruceleguipsicologia.github.io",
+    "telephone": "+34611773028",
+    "email": "iraia.psicologia@hotmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Goietako Plaza, 1",
+      "addressLocality": "Mungia",
+      "addressRegion": "Bizkaia",
+      "postalCode": "48100",
+      "addressCountry": "ES"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 43.354,
+      "longitude": -2.844
+    },
+    "openingHours": "Mo-Fr 09:00-20:00",
+    "priceRange": "€€",
+    "medicalSpecialty": "Psychiatry"
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -860,12 +903,35 @@
     loadReviews();
   });
 
+
+  // ── CONFIG JSONBIN ──
+  const JSONBIN_URL = "https://api.jsonbin.io/v3/b/6a26607df5f4af5e29c979d4";
+  const JSONBIN_KEY = "$2a$10$96.93Ke2UkO2wr0/pROdq.Bg.aRLjYGU8oyEAEy6oSft8U4TJWcLW";
+
   // ── STORAGE ──
-  function getReviews() {
-    try { return JSON.parse(localStorage.getItem('ic_reviews') || '[]'); } catch(e) { return []; }
+  async function getReviews() {
+    try {
+      const res = await fetch(JSONBIN_URL + '/latest', {
+        headers: { 'X-Access-Key': JSONBIN_KEY }
+      });
+      const data = await res.json();
+      const records = data.record;
+      // Filter out the init placeholder
+      return Array.isArray(records) ? records.filter(function(r) { return !r.init; }) : [];
+    } catch(e) { console.log('Error loading reviews:', e); return []; }
   }
-  function saveReviews(reviews) {
-    localStorage.setItem('ic_reviews', JSON.stringify(reviews));
+
+  async function saveReviews(reviews) {
+    try {
+      await fetch(JSONBIN_URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Key': JSONBIN_KEY
+        },
+        body: JSON.stringify(reviews)
+      });
+    } catch(e) { console.log('Error saving reviews:', e); }
   }
 
   function renderStars(n) {
@@ -874,8 +940,8 @@
     }).join('');
   }
 
-  function loadReviews() {
-    const reviews = getReviews();
+  async function loadReviews() {
+    const reviews = await getReviews();
     const container = document.getElementById('reviews-container');
     const noReviews = document.getElementById('no-reviews');
     if (!container) return;
@@ -907,12 +973,12 @@
     if (stars === 0) { errEl.textContent = 'Por favor, selecciona una valoración con estrellas.'; errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
 
-    // Save locally
-    const reviews = getReviews();
+    // Save to JSONBin
+    const reviews = await getReviews();
     const fecha = new Date().toLocaleDateString('es-ES', {year:'numeric', month:'long'});
     reviews.unshift({ nombre: nombre, stars: stars, texto: texto, fecha: fecha });
-    saveReviews(reviews);
-    loadReviews();
+    await saveReviews(reviews);
+    await loadReviews();
 
     // Send email to Iraia via Formspree
     const starsText = '★'.repeat(stars) + '☆'.repeat(5 - stars);

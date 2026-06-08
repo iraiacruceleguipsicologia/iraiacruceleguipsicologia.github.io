@@ -971,6 +971,7 @@
         body: JSON.stringify(reviews)
       });
     } catch(e) { console.log('Error saving reviews:', e); }
+    setTimeout(applyAdminButtons, 50);
   }
 
   function renderStars(n) {
@@ -1087,24 +1088,30 @@
 
 <script>
   // ── ADMIN ──
-  const ADMIN_PWD = "atlas2024iraia"; // Contraseña de Iraia — cámbiala si quieres
+  const ADMIN_PWD = "atlas2024iraia";
+  let isAdmin = false;
+
+  function applyAdminButtons() {
+    if (!isAdmin) return;
+    document.querySelectorAll('.admin-del-btn').forEach(function(btn) {
+      btn.style.display = 'block';
+      btn.onclick = function() {
+        deleteReview(parseInt(this.dataset.idx));
+      };
+    });
+  }
 
   function adminLogin() {
     const pwd = document.getElementById('admin-pwd').value;
     const errEl = document.getElementById('admin-error');
     const activeEl = document.getElementById('admin-active');
     if (pwd === ADMIN_PWD) {
+      isAdmin = true;
       errEl.style.display = 'none';
       activeEl.style.display = 'block';
       document.getElementById('admin-modal').style.display = 'none';
       document.getElementById('valoraciones').scrollIntoView({behavior:'smooth'});
-      // Show all delete buttons
-      document.querySelectorAll('.admin-del-btn').forEach(function(btn) {
-        btn.style.display = 'block';
-        btn.addEventListener('click', function() {
-          deleteReview(parseInt(this.dataset.idx));
-        });
-      });
+      applyAdminButtons();
     } else {
       errEl.style.display = 'block';
       activeEl.style.display = 'none';
@@ -1117,16 +1124,9 @@
     reviews.splice(idx, 1);
     await saveReviews(reviews);
     await loadReviews();
-    // Re-attach delete buttons after reload
-    document.querySelectorAll('.admin-del-btn').forEach(function(btn) {
-      btn.style.display = 'block';
-      btn.addEventListener('click', function() {
-        deleteReview(parseInt(this.dataset.idx));
-      });
-    });
+    applyAdminButtons();
   }
 
-  // Allow pressing Enter on password field
   document.addEventListener('DOMContentLoaded', function() {
     const pwdInput = document.getElementById('admin-pwd');
     if (pwdInput) {

@@ -1130,7 +1130,8 @@
     if (!confirm('¿Seguro que quieres borrar esta valoración?')) return;
     const reviews = await getReviews();
     reviews.splice(idx, 1);
-    await saveReviews(reviews);
+    // If empty, save placeholder so JSONBin doesn't reject it
+    await saveReviews(reviews.length > 0 ? reviews : [{"init": true}]);
     await loadReviews();
     applyAdminButtons();
   }

@@ -971,7 +971,6 @@
         body: JSON.stringify(reviews)
       });
     } catch(e) { console.log('Error saving reviews:', e); }
-    setTimeout(applyAdminButtons, 50);
   }
 
   function renderStars(n) {
@@ -987,19 +986,28 @@
     if (!container) return;
     if (reviews.length === 0) {
       noReviews && (noReviews.style.display = 'block');
+      container.innerHTML = '';
       return;
     }
     noReviews && (noReviews.style.display = 'none');
     container.innerHTML = reviews.map(function(r, i) {
-      return '<div style="background:#fff;border-radius:1.2rem;padding:1.5rem;border:1px solid rgba(160,120,90,.1);box-shadow:0 4px 16px rgba(61,46,35,.06);">' +
+      return '<div style="background:#fff;border-radius:1.2rem;padding:1.5rem;border:1px solid rgba(160,120,90,.1);box-shadow:0 4px 16px rgba(61,46,35,.06);position:relative;">' +
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.6rem;">' +
           '<strong style="color:var(--bark);font-size:.95rem;">' + r.nombre + '</strong>' +
           '<div>' + renderStars(r.stars) + '</div>' +
         '</div>' +
         (r.texto ? '<p style="font-size:.88rem;color:var(--text-mid);line-height:1.65;font-style:italic;">"' + r.texto + '"</p>' : '') +
         '<p style="font-size:.72rem;color:var(--text-light);margin-top:.6rem;">' + r.fecha + '</p>' +
+        '<button class="admin-del-btn" data-idx="' + i + '" style="display:none;position:absolute;top:.6rem;right:.6rem;background:#fdf0ec;border:1px solid rgba(160,120,90,.3);border-radius:.5rem;padding:.3rem .7rem;font-size:.75rem;color:#a0785a;cursor:pointer;font-family:DM Sans,sans-serif;">✕ Borrar</button>' +
       '</div>';
     }).join('');
+    // If admin is active, show delete buttons immediately after render
+    if (isAdmin) {
+      document.querySelectorAll('.admin-del-btn').forEach(function(btn) {
+        btn.style.display = 'block';
+        btn.onclick = function() { deleteReview(parseInt(this.dataset.idx)); };
+      });
+    }
   }
 
   async function submitReview() {

@@ -489,12 +489,33 @@
     <div class="section-tag" style="justify-content:center;color:var(--sage-light)">Cita previa</div>
     <h2>Reserva tu <em>primera consulta</em></h2>
     <p>La primera sesión es una toma de contacto sin compromiso. Cuéntame qué te trae y vemos juntos cómo puedo ayudarte.</p>
-    <div style="margin-top:2.5rem;border-radius:1.5rem;overflow:hidden;box-shadow:0 8px 40px rgba(61,46,35,.15);background:#fff;">
-    <!-- Principio del widget integrado de Calendly -->
-    <div class="calendly-inline-widget" data-url="https://calendly.com/iraia-psicologia-bg_b/nueva-reunion?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e" style="min-width:320px;height:700px;"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <!-- Final del widget integrado de Calendly -->
+    <!-- Calendly buttons -->
+    <div style="margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
+      <button onclick="loadCalendly('primera')" id="btn-primera" style="
+        flex:1;min-width:200px;
+        background:var(--sage);color:#fff;border:none;border-radius:2rem;
+        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
+        cursor:pointer;transition:background .2s,transform .2s;text-align:left;
+      " onmouseover="this.style.background='var(--bark)'" onmouseout="if(!this.classList.contains('active'))this.style.background='var(--sage)'">
+        <div style="font-size:.75rem;opacity:.8;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">30 min · Gratuita</div>
+        🌿 Primera cita · Valoración
+      </button>
+      <button onclick="loadCalendly('consulta')" id="btn-consulta" style="
+        flex:1;min-width:200px;
+        background:var(--cream);color:var(--bark);border:1.5px solid var(--sage-light);border-radius:2rem;
+        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
+        cursor:pointer;transition:background .2s,transform .2s;text-align:left;
+      " onmouseover="this.style.background='var(--sage-pale)'" onmouseout="if(!this.classList.contains('active'))this.style.background='var(--cream)'">
+        <div style="font-size:.75rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">60 min</div>
+        📅 Pedir cita · Consulta
+      </button>
     </div>
+
+    <!-- Calendly widget container -->
+    <div id="calendly-container" style="margin-top:1.5rem;border-radius:1.5rem;overflow:hidden;box-shadow:0 8px 40px rgba(61,46,35,.15);background:#fff;display:none;">
+      <div id="calendly-widget" style="min-width:320px;height:700px;"></div>
+    </div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     
   </div>
 </section>
@@ -549,8 +570,8 @@
 </section>
 
 <!-- DÓNDE ENCONTRARME -->
-<section id="contacto" style="padding:5rem 4% 5rem 8%;">
-  <div style="display:grid;grid-template-columns:380px 1fr;gap:4rem;align-items:start;">
+<section id="contacto" style="padding:5rem 0 5rem 8%;">
+  <div style="display:grid;grid-template-columns:360px 1fr;gap:3rem;align-items:start;">
     <div class="reveal">
       <div class="section-tag">Dónde encontrarme</div>
       <p style="color:var(--text-mid);line-height:1.75;margin-bottom:2.5rem;">Estoy en Mungia, Bizkaia, en el Centro de Fisioterapia Atlas, un espacio acogedor donde puedes sentirte cómodo/a desde el primer momento.</p>
@@ -603,11 +624,11 @@
         </div>
       </div>
     </div>
-    <div class="reveal">
+    <div class="reveal" style="margin-right:0;">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.5!2d-2.8443525!3d43.3539925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDIxJzE0LjQiTiAywrA1MCc0MC45Ilc!5e0!3m2!1ses!2ses!4v1"
         width="100%"
-        style="width:100%;height:520px;border:none;border-radius:1.5rem;box-shadow:0 8px 32px rgba(61,46,35,.1);"
+        style="width:100%;height:520px;border:none;border-radius:1.5rem 0 0 1.5rem;box-shadow:0 8px 32px rgba(61,46,35,.1);"
         allowfullscreen="" loading="lazy">
       </iframe>
     </div>
@@ -1211,6 +1232,47 @@
       errEl.textContent = 'Error al enviar. Inténtalo de nuevo.';
       errEl.style.display = 'block';
     }
+  }
+</script>
+
+<script>
+  const CALENDLY_URLS = {
+    primera: 'https://calendly.com/iraia-psicologia-bg_b/primera-cita-gratuita-valoracion?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e',
+    consulta: 'https://calendly.com/iraia-psicologia-bg_b/consulta-psicologica?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e'
+  };
+
+  function loadCalendly(type) {
+    const container = document.getElementById('calendly-container');
+    const widget = document.getElementById('calendly-widget');
+    const btnPrimera = document.getElementById('btn-primera');
+    const btnConsulta = document.getElementById('btn-consulta');
+
+    // Update button styles
+    btnPrimera.style.background = type === 'primera' ? 'var(--bark)' : 'var(--sage)';
+    btnConsulta.style.background = type === 'consulta' ? 'var(--sage-pale)' : 'var(--cream)';
+    btnConsulta.style.borderColor = type === 'consulta' ? 'var(--sage)' : 'var(--sage-light)';
+
+    // Load widget
+    container.style.display = 'block';
+    widget.innerHTML = '';
+    widget.setAttribute('data-url', CALENDLY_URLS[type]);
+
+    if (window.Calendly) {
+      Calendly.initInlineWidget({
+        url: CALENDLY_URLS[type],
+        parentElement: widget,
+        prefill: {},
+        utm: {}
+      });
+    } else {
+      // Fallback if Calendly script not loaded yet
+      widget.innerHTML = '<iframe src="' + CALENDLY_URLS[type] + '" width="100%" height="700" frameborder="0"></iframe>';
+    }
+
+    // Scroll to widget
+    setTimeout(function() {
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   }
 </script>
 </body>

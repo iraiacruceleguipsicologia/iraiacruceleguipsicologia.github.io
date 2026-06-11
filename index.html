@@ -493,22 +493,31 @@
     <!-- Calendly buttons -->
     <div style="margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
       <button onclick="loadCalendly('primera')" id="btn-primera" style="
-        flex:1;min-width:200px;
+        flex:1;min-width:180px;
         background:var(--sage);color:#fff;border:none;border-radius:2rem;
-        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
-        cursor:pointer;transition:background .2s,transform .2s;text-align:left;
-      " onmouseover="this.style.background='var(--bark)'" onmouseout="if(!this.classList.contains('active'))this.style.background='var(--sage)'">
-        <div style="font-size:.75rem;opacity:.8;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">30 min · Gratuita</div>
-        🌿 Primera cita · Valoración
+        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;
+        cursor:pointer;transition:background .2s;text-align:left;
+      " onmouseover="this.style.background='var(--bark)'" onmouseout="this.style.background='var(--sage)'">
+        <div style="font-size:.72rem;opacity:.85;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">30 min · Gratuita</div>
+        🌿 Primera cita
       </button>
-      <button onclick="loadCalendly('consulta')" id="btn-consulta" style="
-        flex:1;min-width:200px;
+      <button onclick="loadCalendly('presencial')" id="btn-presencial" style="
+        flex:1;min-width:180px;
         background:var(--cream);color:var(--bark);border:1.5px solid var(--sage-light);border-radius:2rem;
-        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
-        cursor:pointer;transition:background .2s,transform .2s;text-align:left;
-      " onmouseover="this.style.background='var(--sage-pale)'" onmouseout="if(!this.classList.contains('active'))this.style.background='var(--cream)'">
-        <div style="font-size:.75rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">60 min</div>
-        📅 Pedir cita · Consulta
+        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;
+        cursor:pointer;transition:background .2s;text-align:left;
+      " onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--cream)'">
+        <div style="font-size:.72rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">60 min · Presencial</div>
+        📍 Cita presencial
+      </button>
+      <button onclick="loadCalendly('online')" id="btn-online" style="
+        flex:1;min-width:180px;
+        background:var(--cream);color:var(--bark);border:1.5px solid var(--sage-light);border-radius:2rem;
+        padding:1.1rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;
+        cursor:pointer;transition:background .2s;text-align:left;
+      " onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--cream)'">
+        <div style="font-size:.72rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">60 min · Online</div>
+        💻 Cita online
       </button>
     </div>
 
@@ -572,19 +581,21 @@
 
 <!-- DÓNDE ENCONTRARME -->
 <section id="contacto" style="padding:5rem 8%;">
-  <div class="section-tag reveal">Dónde encontrarme</div>
-  <p class="reveal" style="color:var(--text-mid);line-height:1.75;margin:.5rem 0 2.5rem;max-width:500px;">Estoy en Mungia, Bizkaia, en el Centro de Fisioterapia Atlas, un espacio acogedor donde puedes sentirte cómodo/a desde el primer momento.</p>
 
-  <!-- Info grid 2x3 + map -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;">
-    
-    <!-- Left: contact info in 2 columns -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem;">
-      <a href="https://maps.app.goo.gl/boSMfcs1oNPsVviQ9" target="_blank" class="contacto-item" style="text-decoration:none;align-items:flex-start;">
+  <!-- Title + description full width -->
+  <div class="section-tag reveal">Dónde encontrarme</div>
+  <p class="reveal" style="color:var(--text-mid);line-height:1.75;margin:.5rem 0 2.5rem;max-width:600px;">Estoy en Mungia, Bizkaia, en el Centro de Fisioterapia Atlas, un espacio acogedor donde puedes sentirte cómodo/a desde el primer momento.</p>
+
+  <!-- Two columns: info left, map right -->
+  <div style="display:grid;grid-template-columns:1.2fr 1.8fr;gap:3rem;align-items:stretch;">
+
+    <!-- Contact info in 2 sub-columns -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-content:start;">
+      <a href="https://maps.app.goo.gl/boSMfcs1oNPsVviQ9" target="_blank" class="contacto-item" style="text-decoration:none;">
         <div class="contacto-item-icon">📍</div>
         <div class="contacto-item-text">
           <strong>Dirección</strong>
-          <span>Goietako Plaza, 1 · Mungia</span>
+          <span>Goietako Plaza, 1 · Mungia (Bizkaia)</span>
         </div>
       </a>
       <a href="tel:+34611773028" class="contacto-item" style="text-decoration:none;">
@@ -607,7 +618,7 @@
         <div class="contacto-item-icon">✉️</div>
         <div class="contacto-item-text">
           <strong>Email</strong>
-          <span style="word-break:break-all;">Iraia.psicologia@gmail.com</span>
+          <span style="word-break:break-all;font-size:.85rem;">Iraia.psicologia@gmail.com</span>
         </div>
       </a>
       <div class="contacto-item">
@@ -628,15 +639,13 @@
       </a>
     </div>
 
-    <!-- Right: map -->
-    <div style="border-radius:1.5rem;overflow:hidden;box-shadow:0 8px 32px rgba(61,46,35,.1);">
+    <!-- Map -->
+    <div style="border-radius:1.5rem;overflow:hidden;box-shadow:0 8px 32px rgba(61,46,35,.1);min-height:400px;">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.5!2d-2.8443525!3d43.3539925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDIxJzE0LjQiTiAywrA1MCc0MC45Ilc!5e0!3m2!1ses!2ses!4v1"
-        width="100%"
-        height="400"
-        style="border:none;display:block;"
-        allowfullscreen=""
-        loading="lazy">
+        width="100%" height="100%"
+        style="border:none;display:block;min-height:400px;"
+        allowfullscreen="" loading="lazy">
       </iframe>
     </div>
 
@@ -1245,39 +1254,40 @@
 
 <script>
   const CALENDLY_URLS = {
-    primera: 'https://calendly.com/iraia-psicologia-bg_b/primera-cita-gratuita-valoracion?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e',
-    consulta: 'https://calendly.com/iraia-psicologia-bg_b/consulta-psicologica?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e'
+    primera:   'https://calendly.com/iraia-psicologia-bg_b/primera-cita-gratuita-valoracion?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e',
+    presencial:'https://calendly.com/iraia-psicologia-bg_b/consulta-psicologica?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e',
+    online:    'https://calendly.com/iraia-psicologia-bg_b/consulta-psicologica-presencial-clon?hide_gdpr_banner=1&background_color=fdfaf7&text_color=3d2e23&primary_color=7a9e7e'
   };
 
   function loadCalendly(type) {
     const container = document.getElementById('calendly-container');
-    const widget = document.getElementById('calendly-widget');
-    const btnPrimera = document.getElementById('btn-primera');
-    const btnConsulta = document.getElementById('btn-consulta');
+    const widget    = document.getElementById('calendly-widget');
+    const btns      = { primera: 'btn-primera', presencial: 'btn-presencial', online: 'btn-online' };
 
-    // Update button styles
-    btnPrimera.style.background = type === 'primera' ? 'var(--bark)' : 'var(--sage)';
-    btnConsulta.style.background = type === 'consulta' ? 'var(--sage-pale)' : 'var(--cream)';
-    btnConsulta.style.borderColor = type === 'consulta' ? 'var(--sage)' : 'var(--sage-light)';
+    // Reset all buttons
+    document.getElementById('btn-primera').style.background   = 'var(--sage)';
+    document.getElementById('btn-presencial').style.background = 'var(--cream)';
+    document.getElementById('btn-online').style.background     = 'var(--cream)';
+
+    // Highlight active
+    if (type === 'primera')    document.getElementById('btn-primera').style.background   = 'var(--bark)';
+    if (type === 'presencial') document.getElementById('btn-presencial').style.background = 'var(--sage-pale)';
+    if (type === 'online')     document.getElementById('btn-online').style.background     = 'var(--sage-pale)';
 
     // Load widget
     container.style.display = 'block';
     widget.innerHTML = '';
-    widget.setAttribute('data-url', CALENDLY_URLS[type]);
 
     if (window.Calendly) {
       Calendly.initInlineWidget({
         url: CALENDLY_URLS[type],
         parentElement: widget,
-        prefill: {},
-        utm: {}
+        prefill: {}, utm: {}
       });
     } else {
-      // Fallback if Calendly script not loaded yet
       widget.innerHTML = '<iframe src="' + CALENDLY_URLS[type] + '" width="100%" height="700" frameborder="0"></iframe>';
     }
 
-    // Scroll to widget
     setTimeout(function() {
       container.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);

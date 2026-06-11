@@ -534,6 +534,7 @@
       " onmouseover="this.style.background='var(--bark)'" onmouseout="this.style.background='var(--sage)'">
         <div style="font-size:.72rem;opacity:.85;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">30 min · Gratuita</div>
         🌿 Primera cita
+        <div style="font-size:.85rem;margin-top:.4rem;opacity:.9;">0€</div>
       </button>
       <button onclick="loadCalendly('presencial')" id="btn-presencial" style="
         flex:1;min-width:180px;
@@ -543,6 +544,7 @@
       " onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--cream)'">
         <div style="font-size:.72rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">60 min · Presencial</div>
         📍 Cita presencial
+        <div style="font-size:.85rem;margin-top:.4rem;opacity:.9;">55€</div>
       </button>
       <button onclick="loadCalendly('online')" id="btn-online" style="
         flex:1;min-width:180px;
@@ -552,7 +554,14 @@
       " onmouseover="this.style.background='var(--sage-pale)'" onmouseout="this.style.background='var(--cream)'">
         <div style="font-size:.72rem;opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;">60 min · Online</div>
         💻 Cita online
+        <div style="font-size:.85rem;margin-top:.4rem;opacity:.9;">50€</div>
       </button>
+    </div>
+
+    <!-- 24h notice -->
+    <div style="display:flex;align-items:center;gap:.8rem;margin-top:1.2rem;padding:.9rem 1.2rem;background:rgba(255,255,255,.08);border-radius:1rem;border:1px solid rgba(255,255,255,.12);">
+      <span style="font-size:1.1rem;flex-shrink:0;">⏰</span>
+      <p style="font-size:.85rem;color:var(--text-light);line-height:1.5;">Las cancelaciones o cambios de cita deben comunicarse con un mínimo de <strong style="color:var(--sage-light);">24 horas de antelación.</strong></p>
     </div>
 
     <!-- Calendly widget container -->

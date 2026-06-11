@@ -80,7 +80,7 @@
     nav {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1.2rem 5%;
+      padding: .7rem 5%;
       background: rgba(253, 250, 247, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(160, 120, 90, 0.12);
@@ -191,7 +191,7 @@
     .stat-l { font-size: .75rem; color: var(--text-light); letter-spacing: .06em; text-transform: uppercase; }
 
     /* ───────── SECTION BASE ───────── */
-    section { padding: 5rem 10%; }
+    section { padding: 5rem 10%; scroll-margin-top: 70px; }
     .section-tag {
       font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
       color: var(--earth); margin-bottom: 1rem;
@@ -741,7 +741,8 @@
   <span>© 2025 Espacio Raíz · Psicóloga General Sanitaria · Mungia</span>
   <span>Diseñado con cuidado · <a href="#">Política de privacidad</a> · <a href="#">Aviso legal</a></span>
 </footer>
-<div style="text-align:right;padding:.4rem 2rem;background:var(--bark);">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:.4rem 2rem;background:var(--bark);">
+  <span style="font-size:.7rem;color:rgba(255,255,255,.2);letter-spacing:.04em;">Web & montaje · Laura Lázaro</span>
   <button onclick="document.getElementById('admin-modal').style.display='flex'" style="
     background:none;border:none;cursor:pointer;
     color:#fff;font-size:.75rem;padding:.2rem .4rem;

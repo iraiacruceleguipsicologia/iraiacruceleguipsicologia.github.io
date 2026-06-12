@@ -74,6 +74,7 @@
       background: var(--warm-white);
       color: var(--text);
       overflow-x: hidden;
+      max-width: 100vw;
     }
 
     /* ───────── NAV ───────── */
@@ -411,11 +412,11 @@
 
       /* DÓNDE ENCONTRARME */
       #contacto { padding: 3rem 5% !important; }
-      #contacto > div[style*="display:flex"] {
-        flex-direction: column !important;
-      }
-      #contacto > div > div:first-child { width: 100% !important; }
+      #contacto { padding: 3rem 5% !important; }
+      #contacto > div { flex-direction: column !important; flex-wrap: wrap !important; }
+      #contacto > div > div { width: 100% !important; flex: none !important; }
       #contacto .contacto-grid-inner { grid-template-columns: 1fr !important; }
+      #contacto iframe { width: 100% !important; height: 260px !important; border-radius: 1rem !important; }
       #contacto iframe { height: 280px !important; border-radius: 1.2rem !important; }
 
       /* FORMULARIO */
@@ -429,9 +430,9 @@
       footer { flex-direction: column; gap: .8rem; text-align: center; }
     }
 
-    #mobile-recomiendo { display: none !important; }
+    #mobile-fab { display: none !important; }
     @media (max-width: 900px) {
-      #mobile-recomiendo { display: flex !important; }
+      #mobile-fab { display: flex !important; }
     }
     @media (max-width: 480px) {
       .hero-left h1 { font-size: 1.7rem; }
@@ -440,6 +441,18 @@
       section { padding: 2.5rem 5%; }
       #contacto { padding: 2.5rem 5% !important; }
       #contactame { padding: 2.5rem 5% !important; }
+
+      /* Fix overflow elements */
+      * { max-width: 100%; }
+      .reservar-inner { padding: 0 !important; }
+      .calendly-inline-widget { min-width: unset !important; width: 100% !important; }
+      #contacto > div[style] { flex-direction: column !important; padding-right: 0 !important; }
+      #contactame > div { max-width: 100% !important; }
+      .sobre-content { padding: 0; }
+      #consulta > div { padding: 0 !important; }
+      .hero-left { padding: 3rem 5% 1.5rem !important; }
+      nav { padding: .6rem 4% !important; }
+      .nav-logo span { font-size: .95rem !important; }
     }
   </style>
 </head>
@@ -1432,25 +1445,22 @@
   });
 </script>
 
-<!-- Botón móvil "Te recomiendo" -->
-<a href="recomendaciones.html" id="mobile-recomiendo" style="
-  display:none;
-  position:fixed;
-  bottom:1.5rem;
-  right:1.5rem;
-  z-index:200;
-  background:var(--sage);
-  color:#fff;
-  padding:.75rem 1.2rem;
-  border-radius:2rem;
-  font-family:'DM Sans',sans-serif;
-  font-size:.85rem;
-  font-weight:500;
-  text-decoration:none;
-  box-shadow:0 4px 16px rgba(61,46,35,.25);
-  display:flex;
-  align-items:center;
-  gap:.4rem;
-">📚 Te recomiendo</a>
+<!-- Botones móvil flotantes -->
+<div id="mobile-fab" style="display:none;position:fixed;bottom:1.5rem;right:1rem;z-index:200;flex-direction:column;gap:.6rem;align-items:flex-end;">
+  <a href="recomendaciones.html" style="
+    background:var(--earth);color:#fff;
+    padding:.7rem 1.1rem;border-radius:2rem;
+    font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;
+    text-decoration:none;box-shadow:0 4px 16px rgba(61,46,35,.25);
+    display:flex;align-items:center;gap:.4rem;
+  ">📚 Te recomiendo</a>
+  <a href="#reservar" style="
+    background:var(--sage);color:#fff;
+    padding:.7rem 1.1rem;border-radius:2rem;
+    font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;
+    text-decoration:none;box-shadow:0 4px 16px rgba(61,46,35,.25);
+    display:flex;align-items:center;gap:.4rem;
+  ">📅 Reservar cita</a>
+</div>
 </body>
 </html>

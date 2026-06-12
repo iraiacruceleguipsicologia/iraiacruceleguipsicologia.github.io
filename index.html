@@ -371,17 +371,70 @@
 
     /* ───────── RESPONSIVE ───────── */
     @media (max-width: 900px) {
+
+      /* NAV */
+      .nav-links { display: none; }
+      nav { padding: .7rem 5%; }
+
+      /* HERO */
+      #inicio { grid-template-columns: 1fr; }
+      .hero-right { min-height: 280px; }
+      .hero-left { padding: 4rem 6% 2rem; }
+      .hero-left h1 { font-size: 2rem; }
+      .hero-left p { font-size: .95rem; }
+
+      /* SERVICIOS */
+      .servicios-grid { grid-template-columns: 1fr; }
+      .servicios-intro { margin-bottom: 2rem; }
+
+      /* SOBRE */
+      #sobre { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 6%; }
+      .sobre-bg { width: 70% !important; margin: 0 auto; }
+
+      /* CONSULTA (despacho) */
+      #consulta > div { flex-direction: column !important; gap: 2rem !important; }
+      #consulta > div > div:last-child { border-radius: 1.5rem !important; }
+
+      /* RESERVAR */
+      #reservar .reservar-inner { max-width: 100% !important; padding: 0 1rem; }
       #reservar .reservar-inner > div[style*="grid-template-columns"] {
         grid-template-columns: 1fr !important;
       }
-      #inicio { grid-template-columns: 1fr; }
-      .hero-right { min-height: 340px; }
-      .servicios-grid { grid-template-columns: 1fr; }
-      #sobre { grid-template-columns: 1fr; }
-      #contacto { grid-template-columns: 1fr; }
+      .calendly-inline-widget { height: 550px !important; }
+
+      /* CONTÁCTAME */
+      #contactame { padding: 3rem 5% !important; }
+      #contactame > div[style*="max-width"] { max-width: 100% !important; }
+      #contactame > div > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* DÓNDE ENCONTRARME */
+      #contacto { padding: 3rem 5% !important; }
+      #contacto > div[style*="display:flex"] {
+        flex-direction: column !important;
+      }
+      #contacto > div > div:first-child { width: 100% !important; }
+      #contacto iframe { height: 280px !important; border-radius: 1.2rem !important; }
+
+      /* FORMULARIO */
       .form-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+
+      /* VALORACIONES */
+      #valoraciones { padding: 3rem 5% !important; }
+      #reviews-container { grid-template-columns: 1fr !important; }
+
+      /* FOOTER */
       footer { flex-direction: column; gap: .8rem; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-left h1 { font-size: 1.7rem; }
+      .btn-primary { width: 100%; justify-content: center; }
+      .sobre-bg { width: 90% !important; }
+      section { padding: 2.5rem 5%; }
+      #contacto { padding: 2.5rem 5% !important; }
+      #contactame { padding: 2.5rem 5% !important; }
     }
   </style>
 </head>
